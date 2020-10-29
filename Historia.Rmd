@@ -1,0 +1,18 @@
+---
+title: "Historia"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    fig_pos: "H"
+---
+
+# 
+
+# Galviar 
+
+<center>
+<img src="./historia/Galviar_map.jpg" width="700px" height="550px"> 
+<center>
+
+<!-- # Disbury -->
