@@ -10,6 +10,7 @@ library("readr")
 library("lubridate")
 library("RcppRoll")
 library("reactable")
+library("ggrepel")
 
 
 theme_set(theme_minimal(15))

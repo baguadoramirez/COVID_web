@@ -1,6 +1,8 @@
 # España
 
 ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center')
+
 db_international <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
 
 
@@ -105,16 +107,6 @@ CCAA <- full_join(CCAA,
                     select(r0, r0_05, r0_95, CCAA, day),
                   by = c("CCAA","day"))
 
-
-
-
-names(CCAA)
-#  [1] "CCAA"              "day"               "casos_ccaa"       
-#  [4] "new_casos_ccaa"    "new_casos_ccaa_ma" "casos_ccaa_ma"    
-#  [7] "poblacion"         "IA_14"             "RT_14"            
-# [10] "r0"                "r0_05"             "r0_95"  
-
-
 ### España
 
 Spain <- right_join(CCAA %>% 
@@ -132,7 +124,7 @@ Spain <- right_join(CCAA %>%
   mutate(casos_ma = ma(casos, 7),
          new_casos_ma = ma(new_casos, 7),
          IA_14 = roll_sumr(new_casos, n = 14)/poblacion*100000,
-         RT_14 = lag(IA_14,7)/lag(IA_14,14))
+         RT_14 = IA_14/lag(IA_14, 7))
 
 
 aux = Spain %>%
@@ -149,12 +141,10 @@ Spain$r0 = c(rep(NA,14),r0$`Mean(R)`)
 Spain$r0_05 = c(rep(NA,14),r0$`Quantile.0.05(R)`)
 Spain$r0_95 = c(rep(NA,14),r0$`Quantile.0.95(R)`)
 
-#  [1] "day"          "casos"        "new_casos"    "poblacion"    "Deceased"    
-#  [6] "Recovered"    "casos_ma"     "new_casos_ma" "IA_14"        "RT_14"       
-# [11] "r0"           "r0_05"        "r0_95"   
 
 Spain_long <- Spain %>% 
   select(day,casos,Deceased,Recovered,r0,RT_14,new_casos,new_casos_ma,r0_05,r0_95) %>% 
+  filter(day <= max(day)-7) %>% 
   gather(id, value, c("casos",
                       "new_casos","new_casos_ma",
                       "Deceased","Recovered",
@@ -164,10 +154,11 @@ Spain_long <- Spain %>%
                           id %in% c("r0","RT_14") ~ "indice",
                           T ~ "else"))
 
-
+Spain_long_label <- Spain_long %>% 
+  filter(day == max(day)) %>% 
+  mutate(value = case_when(id %in% c("casos","Deceased","Recovered","new_casos","new_casos_ma") ~ round(value,0),
+                           id %in% c("r0","RT_14") ~ round(value, 2)))
 ```
-
-
 
 En el siguiente gráfico puedes ver los datos acumulados de pacientes infectados por el Coronavirus los últimos 10 días. En éste gráfico puedes encontrar tres líneas de diferentes colores. Cada una de estas líneas representa el estado de estos pacientes.
 
@@ -177,15 +168,14 @@ En el siguiente gráfico puedes ver los datos acumulados de pacientes infectados
 
 -   <s>La línea <span style="color:green"> verde indica los pacientes dados de alta</s>.
 
-<!--Además, puedes ver que el día 13 de marzo hay una línea roja vertical discontínua. Esta línea indica el día que empezó la cuarentena en el estado español.-->
-
-
-
 ```{r}
 ggplot(Spain_long %>% filter(plot == "casos"),
        aes(day, value, color = id)) +
   geom_point(size = 1) +
   geom_line(show.legend = F, size = 1) +
+  geom_label_repel(data = Spain_long_label %>%
+               filter(plot == "casos"),
+             aes(label = value))+
   scale_x_date(date_labels = "%b %d", breaks = "1 month")+
   scale_color_manual(values = c("blue3","red","green"),
                      labels = c("Casos","Fallecidos","Recuperados")) +
@@ -207,6 +197,9 @@ ggplot(Spain_long %>% filter(plot == "new_casos"),
        aes(day, value, color = id)) +
   geom_point(size = 1) +
   geom_line(show.legend = F, size = 1) +
+  geom_label_repel(data = Spain_long_label %>%
+               filter(plot == "new_casos"),
+             aes(label = value)) +
   scale_x_date(date_labels = "%b %d", breaks = "1 month")+
   scale_color_manual(values = c("red","blue3"),labels = c("Reales","Suavizados")) +
     labs(x = NULL,
@@ -224,7 +217,12 @@ ggplot(Spain_long %>% filter(plot == "new_casos"),
 ggplot(Spain_long %>% filter(plot == "indice"), aes(day,value, color = factor(id))) +
   geom_hline(yintercept = 1, color = "red", linetype = 2) +
   geom_line() +
-  geom_ribbon(data = Spain %>% mutate(value = 0, id = NA), aes(ymax = r0_95, ymin = r0_05), alpha = 0.05, color = "pink") +
+  geom_ribbon(data = Spain %>% mutate(value = 0, id = NA) %>% filter(day <= max(day)-7),
+              aes(ymax = r0_95, ymin = r0_05),
+              alpha = 0.05, color = "pink") +
+  geom_label_repel(data = Spain_long_label %>%
+               filter(plot == "indice"),
+             aes(label = value)) +
   scale_color_discrete(labels = c("Índice de reproducción básico (R0)",
                                   "Razón de Tasas (14 días)")) + 
   scale_x_date(date_labels = "%b %d", breaks = "1 month")+
@@ -234,45 +232,6 @@ ggplot(Spain_long %>% filter(plot == "indice"), aes(day,value, color = factor(id
        caption = "Valores por encima de la línea roja indican que los casos están creciendo,
        valores por debajo indican que los casos están decreciendo") +
   theme(legend.position = "bottom")
-```
+````
 
 
-
-
-
-```{r}
-
-k <- CCAA %>%
-  filter(day == max(day)-7) %>% 
-  select(IA_14, RT_14,r0) %>% 
-  mutate_all(.funs="round", 2) 
-  
-
-
-
-
-reactable(k,
-          columns = list(
-            IA_14 = colDef(name = "Tasa de incidencia acumulada (14 días)",
-              style = function(value) {
-                color <- if (value > 250) {
-                  "red"
-                } else if (value > 150) {
-                  "salmon"
-                } else if (value > 50) {
-                  "orange"
-                } else if (value > 25) {
-                  "yellow"
-                } else if (value < 25) {
-                  "green"
-                }
-                list(fontWeight = 600, background = color, align = "center", color = "white")
-              }
-            )
-          )
-)
-
-
-# ggplot(CCAA %>% filter(CCAA == "La Rioja"),aes(day,IA_14)) + geom_point()
-
-```
