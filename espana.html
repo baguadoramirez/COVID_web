@@ -11,7 +11,7 @@
 
 
 
-<title>España.utf8</title>
+<title>espana.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -291,7 +291,7 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="España.html">España</a>
+  <a href="Espana.html">España</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -332,7 +332,7 @@ $(document).ready(function () {
   guides(color = guide_legend(override.aes = list(size = 3)))</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <pre><code>## Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
-<p><img src="Espan%CC%83a_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="espana_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <hr />
 <pre class="r"><code>ggplot(Spain_long %&gt;% filter(plot == &quot;new_casos&quot;),
        aes(day, value, color = id)) +
@@ -349,7 +349,7 @@ $(document).ready(function () {
   guides(color = guide_legend(override.aes = list(size = 3)))</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
 <pre><code>## Warning: Removed 2 row(s) containing missing values (geom_path).</code></pre>
-<p><img src="Espan%CC%83a_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="espana_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(Spain_long %&gt;% filter(plot == &quot;indice&quot;), aes(day,value, color = factor(id))) +
   geom_hline(yintercept = 1, color = &quot;red&quot;, linetype = 2) +
   geom_line() +
@@ -364,7 +364,7 @@ $(document).ready(function () {
        valores por debajo indican que los casos están decreciendo&quot;) +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
 <pre><code>## Warning: Removed 41 row(s) containing missing values (geom_path).</code></pre>
-<p><img src="Espan%CC%83a_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="espana_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code>k &lt;- CCAA %&gt;%
   filter(day == max(day)-7) %&gt;% 
   select(IA_14, RT_14,r0) %&gt;% 
@@ -393,8 +393,8 @@ $(document).ready(function () {
             )
           )
 )</code></pre>
-<div id="htmlwidget-ad810cfd83034cc06892" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ad810cfd83034cc06892">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"CCAA":["Andalucía","Aragón","Asturias","Cantabria","Ceuta","Castilla y León","Castilla-La Mancha","Canarias","Catalunya","Extremadura","Galicia","Illes Balears","Murcia","Madrid","Melilla","Navarra","País Vasco","La Rioja","Valenciana"],"IA_14":[385.3,715.47,324.51,267.19,539.08,673.74,440.8,72.14,551.26,395.66,218.6,162.05,434.33,410.8,1036.74,1041,476.13,655.22,193.97],"RT_14":[1.4,1.46,1.39,1.71,1.29,1.25,1.1,0.95,1.54,1.5,1.37,1.1,1.08,0.89,1.28,1.12,1.4,1.38,1.25],"r0":[1.29,1.35,1.26,1.37,1.11,1.25,1.09,1.02,1.36,1.36,1.35,1.19,1.02,0.96,1.1,0.92,1.22,1.19,1.11]},"columns":[{"accessor":"CCAA","name":"CCAA","type":"character"},{"accessor":"IA_14","name":"Tasa de incidencia acumulada (14 días)","type":"numeric","style":[{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"orange","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"salmon","align":"center","color":"white"},{"fontWeight":600,"background":"salmon","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"salmon","align":"center","color":"white"}]},{"accessor":"RT_14","name":"RT_14","type":"numeric"},{"accessor":"r0","name":"r0","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"e503473da1464fbbb1134060d5a86544","key":"e503473da1464fbbb1134060d5a86544"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f115988315a7073a7d53" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f115988315a7073a7d53">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"CCAA":["Andalucía","Aragón","Asturias","Cantabria","Ceuta","Castilla y León","Castilla-La Mancha","Canarias","Catalunya","Extremadura","Galicia","Illes Balears","Murcia","Madrid","Melilla","Navarra","País Vasco","La Rioja","Valenciana"],"IA_14":[385.3,715.47,324.51,267.19,539.08,673.74,440.8,72.14,551.26,395.66,218.6,162.05,434.33,410.8,1036.74,1041,476.13,655.22,193.97],"RT_14":[1.4,1.46,1.39,1.71,1.29,1.25,1.1,0.95,1.54,1.5,1.37,1.1,1.08,0.89,1.28,1.12,1.4,1.38,1.25],"r0":[1.29,1.35,1.26,1.37,1.11,1.25,1.09,1.02,1.36,1.36,1.35,1.19,1.02,0.96,1.1,0.92,1.22,1.19,1.11]},"columns":[{"accessor":"CCAA","name":"CCAA","type":"character"},{"accessor":"IA_14","name":"Tasa de incidencia acumulada (14 días)","type":"numeric","style":[{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"orange","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"salmon","align":"center","color":"white"},{"fontWeight":600,"background":"salmon","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"salmon","align":"center","color":"white"}]},{"accessor":"RT_14","name":"RT_14","type":"numeric"},{"accessor":"r0","name":"r0","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"e503473da1464fbbb1134060d5a86544","key":"e503473da1464fbbb1134060d5a86544"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code># ggplot(CCAA %&gt;% filter(CCAA == &quot;La Rioja&quot;),aes(day,IA_14)) + geom_point()</code></pre>
 </div>
 

@@ -3,7 +3,7 @@ navbar:
   title: "HOME"
   right:
     - text: "España"
-      href: España.html    
+      href: Espana.html    
     # - text: "Personajes principales (Avatares) "
     #   menu:
     #     - text: "Nayanael"
