@@ -1,0 +1,444 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ms",
+				"msg3"
+			],
+			[
+				"error",
+				"error_vector"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "COVID_web.sublime-project",
+			"settings":
+			{
+				"buffer_size": 45,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "_site.yml",
+			"settings":
+			{
+				"buffer_size": 573,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "name: \"D&D: Path of the moon\""
+			}
+		},
+		{
+			"file": "styles.css",
+			"settings":
+			{
+				"buffer_size": 539,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": ".col2 {"
+			}
+		},
+		{
+			"file": "index.Rmd",
+			"settings":
+			{
+				"buffer_size": 1951,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "---"
+			}
+		},
+		{
+			"file": "España.Rmd",
+			"settings":
+			{
+				"buffer_size": 9649,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "# España"
+			}
+		},
+		{
+			"file": "_site.R",
+			"settings":
+			{
+				"buffer_size": 488,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "# ================================================"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/Proyectos/COVID_19/web"
+	],
+	"file_history":
+	[
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD_2019/Experimentos/ASOF_Gaze/ASOF_final.Rmd",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/Path-of-the-moon/_site.yml",
+		"/Users/borjaaguado/Desktop/D&D webpage/D&D: Path of the moon/_site.yml",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/Path-of-the-moon/feed.xml",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD_2019/Web Page/rmarkdown-website-tutorial/_site.yml",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Castellano/Practica_2_Psicofísica/angulo visual.svg",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD_2019/Experimentos/ASOF_Gaze/figures/Logos.svg",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Ejecutables_Practicas_2020_2021/navon.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Ejecutables_Practicas_2020_2021/PF_LD_final.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Ejecutables_Practicas_2020_2021/PF_LA_final.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Ejecutables_Practicas_2020_2021/perceived_speed.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Ejecutables_Practicas_2020_2021/length_win.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Ejecutables_Practicas_2020_2021/HK.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Ejecutables_Practicas_2020_2021/depth_final.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Ejecutables_Practicas_2020_2021/brigthness_win.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Docencia/Ejecutables_Practicas_2020_2021/HK_Analysis.R",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/acceleration/acceleration.py",
+		"/Users/borjaaguado/Desktop/py_calculator_basilea.py",
+		"/Users/borjaaguado/Desktop/pi_calculator.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD_2019/Experimentos/ASOF_Gaze/Procedure.svg",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD_2019/Experimentos/ASOF_Gaze/ASOF Write-Ups/Active_Vision_Paper.Rmd",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD_2019/Experimentos/ASOF_Gaze/Setup_with_active.svg",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Practicas/PF_LD_final.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Practicas/HK.py",
+		"/Users/borjaaguado/OneDrive - Universitat de Barcelona/PhD 2020/Practicas/brigthness_win.py",
+		"/Users/borjaaguado/Library/Application Support/Sublime Text 3/Packages/User/python3_psychopy.sublime-build"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "COVID_web.sublime-project",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 45,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "_site.yml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 573,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								573,
+								573
+							]
+						],
+						"settings":
+						{
+							"auto_name": "name: \"D&D: Path of the moon\"",
+							"syntax": "Packages/YAML/YAML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "styles.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 539,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								539,
+								539
+							]
+						],
+						"settings":
+						{
+							"auto_name": ".col2 {",
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "index.Rmd",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1951,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1951,
+								1951
+							]
+						],
+						"settings":
+						{
+							"auto_name": "---",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 206.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "España.Rmd",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9649,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4118,
+								4118
+							]
+						],
+						"settings":
+						{
+							"auto_name": "# España",
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1420.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "_site.R",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 488,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								488,
+								488
+							]
+						],
+						"settings":
+						{
+							"auto_name": "# ================================================",
+							"syntax": "Packages/R/R.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 37.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 181.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/python3_psychopy.sublime-build",
+	"project": "untitled.sublime-project",
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 351.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

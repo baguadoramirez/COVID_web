@@ -1,0 +1,278 @@
+# España
+
+```{r setup, include=FALSE}
+db_international <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
+
+
+covid <- bind_rows(read_csv(paste0(db_international,"time_series_covid19_confirmed_global.csv")) %>%
+                     mutate(status = "Cases"),
+  read_csv(paste0(db_international,"time_series_covid19_deaths_global.csv")) %>% 
+    mutate(status = "Deceased"),
+  read_csv(paste0(db_international,"time_series_covid19_recovered_global.csv")) %>%
+    mutate(status = "Recovered"))  %>% 
+  gather(day, value, c(5:(ncol(.)-1))) %>%
+  select(-Lat, -Long) %>%
+  rename(Country.Region = `Country/Region`) %>% 
+  group_by(day,Country.Region,status) %>% 
+  summarize(cases = sum(value)) %>% 
+  mutate(mantener = ifelse(last(cases) < 5000, 0, 1)) %>% 
+  filter(mantener == 1) %>% 
+  select(-mantener) %>% 
+  ungroup() %>% 
+  mutate(day = mdy(day))
+
+vars <- sort(unique(covid$Country.Region))
+
+
+ISO_ccaa = iso_ccaa = c('Andalucía','Aragón','Asturias','Cantabria',
+    'Ceuta','Castilla y León','Castilla-La Mancha','Canarias',
+    'Catalunya','Extremadura','Galicia','Illes Balears','Murcia','Madrid',
+    'Melilla','Navarra','País Vasco', 'La Rioja','Valenciana')
+
+
+# unique(CCAA$ccaa_iso)
+
+
+ISO_poblacion <- data.frame(CCAA = c("Andalucía","Aragón","Asturias", "Illes Balears","Canarias",
+                                          "Cantabria","Castilla y León","Castilla-La Mancha","Catalunya",
+                                          "Valenciana","Extremadura","Galicia","Madrid",
+                                          "Murcia","Navarra","País Vasco","La Rioja",
+                                          "Ceuta","Melilla"),
+                             poblacion = c(8476718, 1330445, 1018775, 1210750, 2237309, 582357,
+                                           2401230, 2045384, 7652069, 5028650, 1061768, 2702244,
+                                           6663394, 1504607, 656487, 2189310, 315926, 84032, 84496))
+
+ISO_reduced = c('AN','AR','AS','CN','CB','CE',
+    'CL','CM','CT','EX','GA','IB','RI','MD',
+    'ML','MC','NC','PV','VC')
+
+quarantine = as.Date("2020-03-01")
+today = today()
+
+### Comunidades autónomas
+
+CCAA <- full_join(read_csv(file = "https://cnecovid.isciii.es/covid19/resources/datos_ccaas.csv") %>%
+                    mutate(CCAA = factor(x = ccaa_iso,
+                                         labels = iso_ccaa,
+                                         levels = unique(ccaa_iso)),
+                           day = as.Date(fecha)) %>% 
+                    select(-fecha, -ccaa_iso) %>% 
+                    group_by(CCAA) %>% 
+                    mutate(casos_ccaa = cumsum(num_casos)) %>% 
+                    select(CCAA, day, casos_ccaa) %>% 
+                    arrange(CCAA, day) %>% 
+                    group_by(CCAA) %>% 
+                    mutate(new_casos_ccaa = c(NA,diff(casos_ccaa)),
+                           new_casos_ccaa_ma = ma(new_casos_ccaa, 7),
+                           casos_ccaa_ma = ma(casos_ccaa, 7)),
+                  ISO_poblacion,
+                  by = "CCAA") %>% 
+  group_by(CCAA) %>% 
+  mutate(IA_14 = roll_sumr(new_casos_ccaa, n = 14)/poblacion*100000,
+         RT_14 = IA_14/lag(IA_14,7))
+
+
+aux = list(NULL)
+it = 1
+
+for (i in ISO_ccaa){
+  
+  k = CCAA %>%
+    na.omit()  %>%
+  select(-IA_14,-RT_14) %>% 
+    filter(day >= quarantine, day < (today - 7), CCAA == i) %>% 
+    mutate(new_casos_ccaa = ifelse(new_casos_ccaa < 0, 0, new_casos_ccaa)) 
+  
+  r0 = estimate_R(incid = k$new_casos_ccaa,
+                  method = "parametric_si",
+                  config = make_config(list(mean_si = 4.7, std_si = 2.9)))$R
+  
+  k$r0 = c(rep(NA,7),r0$`Mean(R)`)
+  k$r0_05 = c(rep(NA,7),r0$`Quantile.0.05(R)`)
+  k$r0_95 = c(rep(NA,7),r0$`Quantile.0.95(R)`)
+  
+  aux[[it]] = k
+  
+  it = it + 1
+  
+}
+
+
+
+
+CCAA <- full_join(CCAA,
+                  bind_rows(aux) %>% 
+                    select(r0, r0_05, r0_95, CCAA, day),
+                  by = c("CCAA","day"))
+
+
+
+
+names(CCAA)
+#  [1] "CCAA"              "day"               "casos_ccaa"       
+#  [4] "new_casos_ccaa"    "new_casos_ccaa_ma" "casos_ccaa_ma"    
+#  [7] "poblacion"         "IA_14"             "RT_14"            
+# [10] "r0"                "r0_05"             "r0_95"  
+
+
+### España
+
+Spain <- right_join(CCAA %>% 
+    select(-CCAA) %>% 
+    group_by(day) %>% 
+    summarize(casos = sum(casos_ccaa),
+              new_casos = sum(new_casos_ccaa),
+              poblacion = sum(poblacion)),
+  covid %>%
+    filter(Country.Region == "Spain") %>%
+    ungroup() %>% 
+    spread(status,cases) %>% 
+    select(Deceased,Recovered,day),
+  by = "day") %>% 
+  mutate(casos_ma = ma(casos, 7),
+         new_casos_ma = ma(new_casos, 7),
+         IA_14 = roll_sumr(new_casos, n = 14)/poblacion*100000,
+         RT_14 = lag(IA_14,7)/lag(IA_14,14))
+
+
+aux = Spain %>%
+  select(-IA_14,-RT_14) %>% 
+  na.omit()  %>%
+  filter(day >= quarantine, day < (today - 7)) %>% 
+  mutate(new_casos = ifelse(new_casos < 0, 0, new_casos))
+
+r0 = estimate_R(incid = aux$new_casos,
+                method = "parametric_si",
+                config = make_config(list(mean_si = 4.7, std_si = 2.9)))$R
+
+Spain$r0 = c(rep(NA,14),r0$`Mean(R)`)
+Spain$r0_05 = c(rep(NA,14),r0$`Quantile.0.05(R)`)
+Spain$r0_95 = c(rep(NA,14),r0$`Quantile.0.95(R)`)
+
+#  [1] "day"          "casos"        "new_casos"    "poblacion"    "Deceased"    
+#  [6] "Recovered"    "casos_ma"     "new_casos_ma" "IA_14"        "RT_14"       
+# [11] "r0"           "r0_05"        "r0_95"   
+
+Spain_long <- Spain %>% 
+  select(day,casos,Deceased,Recovered,r0,RT_14,new_casos,new_casos_ma,r0_05,r0_95) %>% 
+  gather(id, value, c("casos",
+                      "new_casos","new_casos_ma",
+                      "Deceased","Recovered",
+                      "r0","RT_14","r0_05","r0_95" )) %>% 
+  mutate(plot = case_when(id %in% c("casos","Deceased","Recovered") ~ "casos",
+                          id %in% c("new_casos","new_casos_ma") ~ "new_casos",
+                          id %in% c("r0","RT_14") ~ "indice",
+                          T ~ "else"))
+
+
+```
+
+
+
+En el siguiente gráfico puedes ver los datos acumulados de pacientes infectados por el Coronavirus los últimos 10 días. En éste gráfico puedes encontrar tres líneas de diferentes colores. Cada una de estas líneas representa el estado de estos pacientes.
+
+-   La línea [ azul indica los pacientes con diagnóstico confirmado por Coronavirus]{style="color:blue"}.
+
+-   La línea [ roja indica los pacientes fallecidos]{style="color:red"}.
+
+-   <s>La línea <span style="color:green"> verde indica los pacientes dados de alta</s>.
+
+<!--Además, puedes ver que el día 13 de marzo hay una línea roja vertical discontínua. Esta línea indica el día que empezó la cuarentena en el estado español.-->
+
+
+
+```{r}
+ggplot(Spain_long %>% filter(plot == "casos"),
+       aes(day, value, color = id)) +
+  geom_point(size = 1) +
+  geom_line(show.legend = F, size = 1) +
+  scale_x_date(date_labels = "%b %d", breaks = "1 month")+
+  scale_color_manual(values = c("blue3","red","green"),
+                     labels = c("Casos","Fallecidos","Recuperados")) +
+  labs(x = NULL,
+       y = "Acumulado",
+       color = "Estado: ") + 
+  # scale_y_log10() +
+  theme(axis.text.x = element_text(angle=90, vjust = 0.5),
+        legend.position = "bottom",
+        legend.justification = 0) + 
+  guides(color = guide_legend(override.aes = list(size = 3)))
+
+```
+
+---
+
+```{r}
+ggplot(Spain_long %>% filter(plot == "new_casos"),
+       aes(day, value, color = id)) +
+  geom_point(size = 1) +
+  geom_line(show.legend = F, size = 1) +
+  scale_x_date(date_labels = "%b %d", breaks = "1 month")+
+  scale_color_manual(values = c("red","blue3"),labels = c("Reales","Suavizados")) +
+    labs(x = NULL,
+         y = "Cambio en casos \n  (Casos hoy - Casos ayer)",
+         color = NULL) + 
+  theme(axis.text.x = element_text(angle=90, vjust = 0.5),
+        legend.position = "bottom",
+        legend.justification = 0) + 
+  guides(color = guide_legend(override.aes = list(size = 3)))
+```
+
+
+
+```{r}
+ggplot(Spain_long %>% filter(plot == "indice"), aes(day,value, color = factor(id))) +
+  geom_hline(yintercept = 1, color = "red", linetype = 2) +
+  geom_line() +
+  geom_ribbon(data = Spain %>% mutate(value = 0, id = NA), aes(ymax = r0_95, ymin = r0_05), alpha = 0.05, color = "pink") +
+  scale_color_discrete(labels = c("Índice de reproducción básico (R0)",
+                                  "Razón de Tasas (14 días)")) + 
+  scale_x_date(date_labels = "%b %d", breaks = "1 month")+
+  labs(x = NULL,
+       y = NULL,
+       color = NULL,
+       caption = "Valores por encima de la línea roja indican que los casos están creciendo,
+       valores por debajo indican que los casos están decreciendo") +
+  theme(legend.position = "bottom")
+```
+
+
+
+
+
+```{r}
+
+k <- CCAA %>%
+  filter(day == max(day)-7) %>% 
+  select(IA_14, RT_14,r0) %>% 
+  mutate_all(.funs="round", 2) 
+  
+
+
+
+
+reactable(k,
+          columns = list(
+            IA_14 = colDef(name = "Tasa de incidencia acumulada (14 días)",
+              style = function(value) {
+                color <- if (value > 250) {
+                  "red"
+                } else if (value > 150) {
+                  "salmon"
+                } else if (value > 50) {
+                  "orange"
+                } else if (value > 25) {
+                  "yellow"
+                } else if (value < 25) {
+                  "green"
+                }
+                list(fontWeight = 600, background = color, align = "center", color = "white")
+              }
+            )
+          )
+)
+
+
+# ggplot(CCAA %>% filter(CCAA == "La Rioja"),aes(day,IA_14)) + geom_point()
+
+```

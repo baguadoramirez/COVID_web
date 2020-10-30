@@ -1,7 +1,33 @@
 ---
-title: "D&D: Path of the moon"
+title: "COVID-19 (SARS-CoV-2): Datos Nacionales, por CCAA, mundiales y simulación epidemiológica"
+#author: "Borja Aguado"
+output: html_document
 ---
 
-Hello, Dragons!
+## Información Importante {#informacion-importante}
+
+¿Qué debo saber antes de interpretar los siguientes gráficos?
+
+-   **Primero:** La cuarentena empezó el día 13 de Marzo y el período de incubación máximo de la enfermedad es de máximo 15 días.
+
+-   **Segundo:** ¿Recuerdas aquello de *aplanar la curva*? ¿qué significa esto en datos reales? A día 20 de Marzo, la media de nuevos casos confirmados era de entre 2000 y 3000 nuevos casos diarios. Si no se tomasen las medidas de confinamiento, el número de casos confirmados diarios hubieran sido mucho mayores. Cifras que, aún con todo su esfuerzo, nuestro sistema sanitario es incapaz de manejar.
+
+-   **Tercero:** Ten en cuenta que el número de afectados que aparece en estos gráficos únicamente corresponde a aquellos casos clínicos a los que se le han realizado las pruebas para el Coronanavirus. Sin embargo, el número de afectados **real** es mucho mayor.
+
+-   **Cuarto:** ¿Tengo síntomas que cuadran con la enfermedad, debería pedir que me hagan la prueba? **NO**. curre lo mismo que cuando tenemos cualquier otra enfermedad. En muchos casos, no necesitamos ir al médico a que lo corrobore para quedarnos en casa y evitar el contacto con **personas de riesgo**. Los protocolos de actuación en cada comunidad van adaptándose a las necesidades diarias, por lo que seguramente sólo te harán la prueba en caso de que presentes fiebre alta mantenida en el tiempo o tengas dificultades para respirar.
 
 ---
+
+<html>
+
+<footer role="contentinfo" id="site-footer">
+
+<small>Barcelona, 2020. This application was created by Borja Aguado using <a href="http://www.r-project.org">R</a> with <a href="http://rmarkdown.rstudio.com">RMarkdown</a> and hosted on <a href="http://shinyapps.io">Shinyapps</a>. </small>
+
+</p>
+
+</footer>
+
+</html>
+
+
