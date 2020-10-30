@@ -3,7 +3,9 @@ navbar:
   title: "HOME"
   right:
     - text: "España"
-      href: Espana.html    
+      href: "1_espana.html"  
+    - text: "Comunidades Autónomas"
+      href: "2_CCAA.html"  
     # - text: "Personajes principales (Avatares) "
     #   menu:
     #     - text: "Nayanael"
