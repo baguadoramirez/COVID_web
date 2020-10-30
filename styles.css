@@ -1,9 +1,15 @@
+.col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  
 figure_side {
   float: right;
-  width: 25%;
-  text-align: center;
+  width: 30%;
+  text-align: left;
   font-style: italic;
-  font-size: smaller;
+  font-size: small;
   text-indent: 0;
   border: thin silver solid;
   margin: 0.5em;
@@ -16,8 +22,6 @@ figure {
   font-size: smaller;
   text-indent: 0;
   border: thin silver solid;
-  margin: 0.5em;
-  padding: 0.5em;
 }
 
 figurecaption{

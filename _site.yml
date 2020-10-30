@@ -2,18 +2,18 @@ name: "D&D: Path of the moon"
 navbar:
   title: "HOME"
   right:
-    - text: "Historia"
-      href: historia.html    
-    - text: "Personajes principales (Avatares) "
-      menu:
-        - text: "Nayanael"
-          href: Nayanael.html
-        - text: "Gwydion"
-          href: Gwydion.html
-        - text: "Niky"
-          href: Niky.html
-        - text: "Bam"
-          href: Bam.html
+    - text: "España"
+      href: españa.html    
+    # - text: "Personajes principales (Avatares) "
+    #   menu:
+    #     - text: "Nayanael"
+    #       href: Nayanael.html
+    #     - text: "Gwydion"
+    #       href: Gwydion.html
+    #     - text: "Niky"
+    #       href: Niky.html
+    #     - text: "Bam"
+    #       href: Bam.html
 
           
 ## LOS NOMBRES SON CASE-SENSITIVE
