@@ -11,7 +11,7 @@
 
 
 
-<title>2_CCAA.utf8</title>
+<title>Comunidades Autónomas</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -296,6 +296,12 @@ $(document).ready(function () {
 <li>
   <a href="2_CCAA.html">Comunidades Autónomas</a>
 </li>
+<li>
+  <a href="3_sexo_edad.html">Edad y Sexo</a>
+</li>
+<li>
+  <a href="9_referencias.html">Referencias y Origen de los Datos</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -305,42 +311,33 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Comunidades Autónomas</h1>
 
 </div>
 
 
-<div id="ccaa" class="section level1">
-<h1>CCAA</h1>
-<pre class="r"><code>k &lt;- CCAA %&gt;%
-  filter(day == max(day)-7) %&gt;% 
-  select(IA_14, RT_14,r0) %&gt;% 
-  mutate_all(.funs=&quot;round&quot;, 2) </code></pre>
-<pre><code>## Adding missing grouping variables: `CCAA`</code></pre>
-<pre><code>## `mutate_all()` ignored the following grouping variables:
-## Column `CCAA`
-## Use `mutate_at(df, vars(-group_cols()), myoperation)` to silence the message.</code></pre>
-<pre class="r"><code>reactable(k,
-          columns = list(
-            IA_14 = colDef(name = &quot;Tasa de incidencia acumulada (14 días)&quot;,
-              style = function(value) {
-                color &lt;- if (value &gt; 250) {
-                  &quot;red&quot;
-                } else if (value &gt; 150) {
-                  &quot;salmon&quot;
-                } else if (value &gt; 50) {
-                  &quot;orange&quot;
-                } else if (value &gt; 25) {
-                  &quot;yellow&quot;
-                } else if (value &lt; 25) {
-                  &quot;green&quot;
-                }
-                list(fontWeight = 600, background = color, align = &quot;center&quot;, color = &quot;white&quot;)
-              }
-            )
-          )
-)</code></pre>
-<div id="htmlwidget-e6fe4d118a79f3d97763" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e6fe4d118a79f3d97763">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"CCAA":["Andalucía","Aragón","Asturias","Cantabria","Ceuta","Castilla y León","Castilla-La Mancha","Canarias","Catalunya","Extremadura","Galicia","Illes Balears","Murcia","Madrid","Melilla","Navarra","País Vasco","La Rioja","Valenciana"],"IA_14":[385.3,715.47,324.51,267.19,539.08,673.74,440.8,72.14,551.26,395.66,218.6,162.05,434.33,410.8,1036.74,1041,476.13,655.22,193.97],"RT_14":[1.4,1.46,1.39,1.71,1.29,1.25,1.1,0.95,1.54,1.5,1.37,1.1,1.08,0.89,1.28,1.12,1.4,1.38,1.25],"r0":[1.29,1.35,1.26,1.37,1.11,1.25,1.09,1.02,1.36,1.36,1.35,1.19,1.02,0.96,1.1,0.92,1.22,1.19,1.11]},"columns":[{"accessor":"CCAA","name":"CCAA","type":"character"},{"accessor":"IA_14","name":"Tasa de incidencia acumulada (14 días)","type":"numeric","style":[{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"orange","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"salmon","align":"center","color":"white"},{"fontWeight":600,"background":"salmon","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"red","align":"center","color":"white"},{"fontWeight":600,"background":"salmon","align":"center","color":"white"}]},{"accessor":"RT_14","name":"RT_14","type":"numeric"},{"accessor":"r0","name":"r0","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"e503473da1464fbbb1134060d5a86544","key":"e503473da1464fbbb1134060d5a86544"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<hr />
+<hr />
+<p><img src="2_CCAA_files/figure-html/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /></p>
+<hr />
+<p><img src="2_CCAA_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
+<hr />
+<p><img src="2_CCAA_files/figure-html/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
+<hr />
+<p><img src="2_CCAA_files/figure-html/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
+<hr />
+<p><img src="2_CCAA_files/figure-html/unnamed-chunk-7-1.png" width="768" style="display: block; margin: auto;" /></p>
+<div id="índices-por-ccaa" class="section level5">
+<h5>Índices por CCAA</h5>
+<div id="htmlwidget-7f7ba297431ab28f8ab4" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7f7ba297431ab28f8ab4">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"CCAA":["Andalucía","Aragón","Asturias","Cantabria","Ceuta","Castilla y León","Castilla-La Mancha","Canarias","Catalunya","Extremadura","Galicia","Illes Balears","Murcia","Madrid","Melilla","Navarra","País Vasco","La Rioja","Valenciana"],"IA_14":[519.317,976.064,423.744,365.24,752.094,837.321,540.241,70.352,715.179,540.231,295.421,203.758,599.027,390.897,1242.662,783.869,630.29,752.075,248.476],"RT_14":[1.371,1.4,1.334,1.445,1.264,1.251,1.172,0.948,1.348,1.475,1.426,1.28,1.163,0.913,1.116,0.972,1.332,1.159,1.166],"r0":[1.131,1.114,1.208,1.073,1.006,1.058,1.055,0.897,1.05,1.219,1.188,1.124,0.962,0.887,0.925,0.841,1.138,0.965,0.909]},"columns":[{"accessor":"CCAA","name":"CCAA","type":"character"},{"accessor":"IA_14","name":"Tasa de incidencia acumulada (14 días)","type":"numeric","style":[{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"orange","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"salmon","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"red","align":"center","color":"black"},{"fontWeight":600,"background":"salmon","align":"center","color":"black"}]},{"accessor":"RT_14","name":"Ratio Tasa de incidencia acumulada (14 días)","type":"numeric","style":[{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"},{"fontWeight":600,"background":"#A6D96A","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"},{"fontWeight":600,"background":"#A6D96A","align":"center","color":"black"},{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"},{"fontWeight":600,"background":"#A6D96A","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"},{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"}]},{"accessor":"r0","name":"Índice de reproducción básico (R0)","type":"numeric","style":[{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"},{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#FFFFBF","align":"center","color":"black"},{"fontWeight":600,"background":"#FFFFBF","align":"center","color":"black"},{"fontWeight":600,"background":"#FFFFBF","align":"center","color":"black"},{"fontWeight":600,"background":"#FFFFBF","align":"center","color":"black"},{"fontWeight":600,"background":"#1A9641","align":"center","color":"black"},{"fontWeight":600,"background":"#FFFFBF","align":"center","color":"black"},{"fontWeight":600,"background":"#D7191C","align":"center","color":"black"},{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"},{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"},{"fontWeight":600,"background":"#A6D96A","align":"center","color":"black"},{"fontWeight":600,"background":"#1A9641","align":"center","color":"black"},{"fontWeight":600,"background":"#A6D96A","align":"center","color":"black"},{"fontWeight":600,"background":"#1A9641","align":"center","color":"black"},{"fontWeight":600,"background":"#FDAE61","align":"center","color":"black"},{"fontWeight":600,"background":"#A6D96A","align":"center","color":"black"},{"fontWeight":600,"background":"#A6D96A","align":"center","color":"black"}]}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"className":"CCAA-tbl","dataKey":"b4bd929a41fac83ab8bb3adf7cb95c55","key":"b4bd929a41fac83ab8bb3adf7cb95c55"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<hr />
+<html>
+<footer role="contentinfo" id="site-footer">
+<p><small>Barcelona, 2020. This application was created by Borja Aguado using <a href="http://www.r-project.org">R</a> with <a href="http://rmarkdown.rstudio.com">RMarkdown</a> and hosted on <a href="http://shinyapps.io">Shinyapps</a>. </small></p>
+</p>
+</footer>
+</html>
 </div>
 
 

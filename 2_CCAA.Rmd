@@ -1,17 +1,203 @@
-# CCAA
+---
+title: "Comunidades Autónomas"
+---
+
+```{r, echo = F}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center', fig.width = 8)
+```
+
+---
+
+```{r}
+CCAA_long <- CCAA %>% 
+  select(day,casos_ccaa,r0,RT_14,new_casos_ccaa,new_casos_ccaa_ma,r0_05,r0_95) %>% 
+  filter(day <= max(day)-7) %>% 
+  gather(id, value, c("casos_ccaa",
+                      "new_casos_ccaa","new_casos_ccaa_ma",
+                      "r0","RT_14","r0_05","r0_95" )) %>% 
+  mutate(plot = case_when(id %in% c("new_casos_ccaa","new_casos_ccaa_ma") ~ "new_casos",
+                          id %in% c("r0","RT_14") ~ "indice",
+                          T ~ "else"),
+         CCAA_order = case_when(CCAA %in% iso_ccaa[1:5] ~ 1,
+                                CCAA %in% iso_ccaa[6:10] ~ 2,
+                                CCAA %in% iso_ccaa[11:15] ~ 3,
+                                CCAA %in% iso_ccaa[16:19] ~ 4))
+
+CCAA_long_label <- CCAA_long %>% 
+  filter(!(id %in% c("r0_05","r0_95"))) %>% 
+  filter(day == max(day)) %>% 
+  mutate(value = case_when(id %in% c("casos_ccaa","new_casos_ccaa","new_casos_ccaa_ma") ~ round(value,0),
+                           id %in% c("r0","RT_14") ~ round(value, 2)))
+```
+
+---
+
+```{r}
+ggplot(CCAA_long %>%
+         filter(id == "casos_ccaa", day > today - 31*6),
+       aes(day, value)) +
+  geom_line(show.legend = F, size = 1, color = "red") +
+  geom_label_repel(data = CCAA_long_label %>%
+                     filter(id == "casos_ccaa"),
+                   aes(label = value), size = 2)+
+  scale_x_date(date_labels = "%b %d", breaks = "45 days")+
+  labs(x = NULL,
+       y = "Acumulado",
+       title = "Casos acumulados por CCAA") + 
+  theme(legend.position = "bottom",
+        legend.justification = 0) + 
+  facet_wrap(~CCAA, scales = "free_y") 
+
+```
+
+---
+
+```{r}
+ggplot(CCAA_long %>%
+                 filter(id == "new_casos_ccaa", day > today - 31*3),
+               aes(day, value)) +
+          geom_point(size = 1, color = "red") +
+          geom_line(data = CCAA_long %>%
+                      filter(id == "new_casos_ccaa_ma", day > today - 31*3),
+                    show.legend = F, size = 1, color = "blue") +
+          geom_label_repel(data = CCAA_long_label %>%
+                             filter(id == "new_casos_ccaa"),
+                           aes(label = value), size = 2)+
+          scale_x_date(date_labels = "%b %d", breaks = "1 month")+
+          labs(x = NULL,
+               y = "Cambio en casos \n  (Casos hoy - Casos ayer)",
+               title = "Casos nuevos por CCAA") + 
+          theme(legend.position = "bottom",
+                legend.justification = 0) + 
+          facet_wrap(~CCAA, scales = "free_y") 
+```
+
+---
+
+```{r}
+ggplot(CCAA_long %>%
+         filter(plot == "indice", day > today - 31*3),
+       aes(day,value, color = factor(id))) +
+  geom_hline(yintercept = 1, color = "black", linetype = 2) +
+  geom_line() +
+  geom_label_repel(data =CCAA_long_label %>%
+               filter(plot == "indice"),
+             aes(label = value), size = 2,
+             show.legend = F) +
+  scale_x_date(date_labels = "%b %d", breaks = "1 month") +
+  scale_color_discrete(labels = c("Índice de reproducción básico (R0)",
+                                  "Ratio de incidencia acumulada (14 días)")) + 
+  coord_cartesian(ylim = c(0.5,2)) +
+  facet_wrap( ~ CCAA) +
+  labs(x = NULL,
+       y = NULL,
+       color = NULL,
+       title = "Índices por CCAA",
+       caption = "Valores por encima de la línea roja indican que los casos están creciendo,
+       valores por debajo indican que los casos están decreciendo") +
+  theme(legend.position = "bottom") 
+
+```
+
+---
+
+```{r}
+ggplot(UCI %>%
+         filter(percent_camas_ocupadas_uci_covid > 1) %>% 
+         group_by(ccaa) %>% 
+         mutate(ma7 = ma(percent_camas_ocupadas_uci_covid,7)),
+       aes(day,percent_camas_ocupadas_uci_covid)) +
+  geom_point(color = "red") +
+  geom_line(color = "red") +
+  geom_line(aes(day,ma7), color = "blue3", size = 1) +
+  geom_label_repel(data = UCI_long_label %>%
+                     filter(id == "percent_camas_ocupadas_uci_covid"),
+                   aes(day, value, label = value), size = 2) +
+  facet_wrap(~ccaa) +
+  scale_x_date(date_labels = "%b %d", breaks = "10 days") +
+  labs(x = NULL, y = "Camas UCI ocupadas (%)", title = "Ocupación UCI por CCAA (%)") +
+  theme(legend.position = "bottom")
+```
+
+---
+
+```{r}
+pallete_dicho = c("darkgreen","darkred")
+
+
+ggplot(UCI_long %>%
+         filter(id %in% c("ingresos_covid_ultimas_24_h" ,
+                          "altas_covid_ultimas_24_h")),
+       aes(day,value, color = id)) +
+  geom_point(alpha = 0.1) +
+  geom_line(alpha = 0.051) +
+  geom_line(data = UCI_long %>%
+         filter(id %in% c("ingresos_covid_ultimas_24_h" ,
+                          "altas_covid_ultimas_24_h")) %>%
+              group_by(ccaa,id) %>% 
+              mutate(value = ma(value,7))) +
+  geom_label_repel(data = UCI_long_label %>%
+                     filter(id %in% c("ingresos_covid_ultimas_24_h" ,
+                          "altas_covid_ultimas_24_h")),
+                   aes(day, value, label = value),
+                   size = 2, show.legend = F) +
+  facet_wrap(~ccaa, scales = "free_y") +
+  scale_x_date(date_labels = "%b %d", breaks = "1 month") +
+  scale_color_manual(values = pallete_dicho,
+                     name = "Últimas 24 h",
+                     labels = c("Altas", "Bajas")) +
+  labs(x = NULL, y = NULL, title = "Altas/Bajas por CCAA (%)") +
+  theme(legend.position = "bottom")
+```
+
 
 ```{r}
 
 k <- CCAA %>%
   filter(day == max(day)-7) %>% 
   select(IA_14, RT_14,r0) %>% 
-  mutate_all(.funs="round", 2) 
+  mutate_all(.funs="round", 3) 
 
-reactable(k,
+
+pallete = RColorBrewer::brewer.pal(5, "RdYlGn")
+
+
+table_ccaa <- reactable(k,
+          class = "CCAA-tbl",
           columns = list(
+            RT_14 = colDef(name = "Ratio Tasa de incidencia acumulada (14 días)",
+              style = function(value) {
+                color <- if (value > 1.2) {
+                  pallete[1]
+                } else if (value > 1.1) {
+                  pallete[2]
+                } else if (value > 1) {
+                  pallete[3]
+                } else if (value > 0.9) {
+                  pallete[4]
+                } else if (value <= 0.9) {
+                  pallete[5]
+                }
+                list(fontWeight = 600, background = color, align = "center", color = "black")
+              }),
+            r0 = colDef(name = "Índice de reproducción básico (R0)",
+              style = function(value) {
+                color <- if (value > 1.2) {
+                  pallete[1]
+                } else if (value > 1.1) {
+                  pallete[2]
+                } else if (value > 1) {
+                  pallete[3]
+                } else if (value > 0.9) {
+                  pallete[4]
+                } else if (value <= 0.9) {
+                  pallete[5]
+                }
+                list(fontWeight = 600, background = color, align = "center", color = "black")
+              }),
             IA_14 = colDef(name = "Tasa de incidencia acumulada (14 días)",
               style = function(value) {
-                color <- if (value > 250) {
+                back <- if (value > 250) {
                   "red"
                 } else if (value > 150) {
                   "salmon"
@@ -22,10 +208,34 @@ reactable(k,
                 } else if (value < 25) {
                   "green"
                 }
-                list(fontWeight = 600, background = color, align = "center", color = "white")
+                list(fontWeight = 600, background = back, align = "center", color = "black")
               }
             )
           )
 )
 
 ```
+
+##### Índices por CCAA
+
+```{r}
+table_ccaa
+```
+
+
+
+
+
+--- 
+
+<html>
+
+<footer role="contentinfo" id="site-footer">
+
+<small>Barcelona, 2020. This application was created by Borja Aguado using <a href="http://www.r-project.org">R</a> with <a href="http://rmarkdown.rstudio.com">RMarkdown</a> and hosted on <a href="http://shinyapps.io">Shinyapps</a>. </small>
+
+</p>
+
+</footer>
+
+</html>

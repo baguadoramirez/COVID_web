@@ -6,6 +6,10 @@ navbar:
       href: "1_espana.html"  
     - text: "Comunidades Autónomas"
       href: "2_CCAA.html"  
+    - text: "Edad y Sexo"
+      href: "3_sexo_edad.html"  
+    - text: "Referencias y Origen de los Datos"
+      href: "9_referencias.html"
     # - text: "Personajes principales (Avatares) "
     #   menu:
     #     - text: "Nayanael"
@@ -27,4 +31,5 @@ navbar:
 output_dir: "."
 output:
   html_document:
+    footer: "footer.html"
     css: "styles.css"

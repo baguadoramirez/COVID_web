@@ -1,0 +1,164 @@
+---
+title: "Datos por Sexo y Edad"
+output: html_document
+---
+
+```{r, echo = F}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center')
+```
+
+```{r}
+# age_sex = janitor::clean_names(read_csv("https://data.cdc.gov/api/views/9bhg-hcku/rows.csv?accessType=DOWNLOAD"))%>% 
+#   filter(state == "United States",
+#          !(sex %in% c("All Sexes","Unknown")),
+#          age_group != "All Ages") %>% 
+#   slice(c(1,3,4,5,7,9,10,12,13,14,15,16,18,19,20,22,24,25,27,28,29,30)) %>% 
+#   rename(age = age_group,
+#          deceased = covid_19_deaths) %>% 
+#   ungroup() %>% 
+#   mutate(total = sum(deceased)) %>% 
+#   group_by(sex) %>% 
+#   mutate(perc = deceased/total,
+#          age_numeric = c(1:11))
+# 
+# 
+# labels_age = c("< 1",
+#                "1 - 4",
+#                "5 - 14",
+#                "15 - 24",
+#                "25 - 34",
+#                "35 - 44",
+#                "45 - 54",
+#                "55 - 64",
+#                "65 - 74",
+#                "75 - 84",
+#                "> 85")
+
+
+
+
+Spain_age <- read_csv(file = "https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/nacional_covid19_rango_edad.csv") %>% 
+  filter(fecha == max(fecha), rango_edad != "Total", sexo != "ambos") %>% 
+  select(-fecha) %>% 
+  mutate(total = sum(casos_confirmados)) %>% 
+  group_by(rango_edad, sexo) %>% 
+  mutate(hospitalizados_casos = round(hospitalizados/casos_confirmados*100,2),
+         hospitalizados_total = round(hospitalizados/total*100,2),
+         UCI_casos = round(ingresos_uci/casos_confirmados*100,2),
+         UCI_total = round(ingresos_uci/total*100,2),
+         fallecidos_casos = round(fallecidos/casos_confirmados*100,2),
+         fallecidos_total = round(fallecidos/total*100,2),
+         y = case_when(sexo == "hombres" ~95,
+                       sexo == "mujeres" ~85)) %>% 
+  group_by(rango_edad, sexo) %>% 
+  gather(id,value, c("hospitalizados_casos","hospitalizados_total",
+                     "UCI_casos","UCI_total",
+                     "fallecidos_casos","fallecidos_total")) %>% 
+  mutate(id2 = case_when(id %in% c("hospitalizados_casos","hospitalizados_total") ~ 1,
+                         id %in% c("UCI_casos","UCI_total") ~ 2,
+                         id %in% c("fallecidos_casos","fallecidos_total") ~ 3))
+
+
+```
+
+---
+
+```{r}
+ggplot(Spain_age %>%
+         filter(id == "hospitalizados_casos"),
+       aes(rango_edad,value, color = sexo, group = sexo)) +
+  geom_point(size = 2) +
+  geom_line() + 
+  geom_label(aes(label = value, y = y), show.legend = F, size = 5,fontface = "bold",fill="white") +
+  labs(x = "Rangos de edad", y = "% de los contagiados por grupo", title = "Hospitalizados por grupos (%)") +
+  scale_color_discrete(name = "Sexo", labels = c("Hombres","Mujeres")) +
+  theme(legend.position = "bottom", legend.justification = 0)
+```
+
+---
+
+```{r}
+ggplot(Spain_age %>%
+         filter(id == "UCI_casos") %>% 
+         mutate(y = case_when(sexo == "hombres" ~ 14,
+                              sexo == "mujeres" ~ 12)),
+       aes(rango_edad,value, color = sexo, group = sexo)) +
+  geom_point(size = 2) +
+  geom_line() + 
+  geom_label(aes(label = value, y =y), show.legend = F, size = 5, fontface = "bold",fill="white") +
+  labs(x = "Rangos de edad", y = "% de los contagiados por grupo", color = "Sexo", title = "UCI por grupos (%)") +
+  scale_color_discrete(labels = c("Hombres","Mujeres")) +
+  #coord_cartesian(ylim = c(0,100))+
+  theme(legend.position = "bottom", legend.justification = 0) 
+```
+
+---
+
+```{r}
+ggplot(Spain_age %>%
+         filter(id == "UCI_total") %>% 
+         mutate(y = case_when(sexo == "hombres" ~ 1,
+                              sexo == "mujeres" ~ 0.9)),
+       aes(rango_edad,value, color = sexo, group = sexo)) +
+  geom_point(size = 2) +
+  geom_line() + 
+  geom_label(aes(label = value, y =y), show.legend = F, size = 5, fontface = "bold",fill="white") +
+  labs(x = "Rangos de edad", y = "% del total de contagios", color = "Sexo", title = "UCI del total (%)") +
+  scale_color_discrete(labels = c("Hombres","Mujeres")) +
+  #coord_cartesian(ylim = c(0,100))+
+  theme(legend.position = "bottom", legend.justification = 0) 
+```
+
+---
+
+```{r}
+ggplot(Spain_age %>%
+         filter(id == "fallecidos_casos") %>% 
+         mutate(y = case_when(sexo == "hombres" ~ 38,
+                              sexo == "mujeres" ~ 34)),
+       aes(rango_edad,value, color = sexo, group = sexo)) +
+  geom_point(size = 2) +
+  geom_line() + 
+  geom_label(aes(label = value, y =y), show.legend = F, size = 5, fontface = "bold",fill="white") +
+  labs(x = "Rangos de edad", y = "% de los contagiados por grupo", color = "Sexo", title = "Fallecidos por grupos (%)") +
+  scale_color_discrete(labels = c("Hombres","Mujeres")) +
+  #coord_cartesian(ylim = c(0,100))+
+  theme(legend.position = "bottom", legend.justification = 0) 
+```
+
+---
+
+```{r}
+ggplot(Spain_age %>%
+         filter(id == "fallecidos_total") %>% 
+         mutate(y = case_when(sexo == "hombres" ~ 2.4,
+                              sexo == "mujeres" ~ 2.15)),
+       aes(rango_edad,value, color = sexo, group = sexo)) +
+  geom_point(size = 2) +
+  geom_line() + 
+  geom_label(aes(label = value, y =y), show.legend = F, size = 5, fontface = "bold",fill="white") +
+  labs(x = "Rangos de edad", y = "% del total de contagios", color = "Sexo", title = "Fallecidos del total (%)") +
+  scale_color_discrete(labels = c("Hombres","Mujeres")) +
+  #coord_cartesian(ylim = c(0,100))+
+  theme(legend.position = "bottom", legend.justification = 0)
+```
+
+
+
+
+
+
+--- 
+
+<html>
+
+<footer role="contentinfo" id="site-footer">
+
+<small>Barcelona, 2020. This application was created by Borja Aguado using <a href="http://www.r-project.org">R</a> with <a href="http://rmarkdown.rstudio.com">RMarkdown</a> and hosted on <a href="http://shinyapps.io">Shinyapps</a>. </small>
+
+</p>
+
+</footer>
+
+</html>
+

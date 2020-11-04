@@ -1,0 +1,44 @@
+---
+title: "Referencias"
+output: html_document
+bibliography: "covid19.bib"
+---
+
+## Referencias y avisos {#referencias}
+
+Esta página web se trata de un recurso que únicamente pretende dar información actualizada, fiable y complementaria a la información provista por los organismos oficiales, a los cuales en ningun caso pretende sustituir.
+
+Para obtener información oficial, por favor diríjase a:
+
+-   [Ministerio de Sanidad del Gobierno de España](https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/home.htm)
+
+-   [Organización Mundial de la Salud: Emeregencias](https://www.who.int/es/emergencies/diseases/novel-coronavirus-2019/advice-for-public)
+
+-   [Organización Mundial de la Salud: Información General sobre el Coronavirus](https://www.who.int/es/health-topics/coronavirus/coronavirus)
+
+-   [Centros Para el Control y la Prevención de Enfermedades (CDC)](https://www.cdc.gov/coronavirus/2019-ncov/index-sp.html)
+
+Los datos que se utilizan en esta página han sido extraídos y pertenecen a:
+
+-   [Johns Hopkins Center for Systems Science and Engineering github page](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)
+
+-   [Datadista - Datos acutalizados diariamente de coronavirus (COVID-19) por CCAA en España](https://github.com/datadista/datasets/tree/master/COVID%2019)
+
+---
+
+<!-- ### Referencias -->
+
+
+--- 
+
+<html>
+
+<footer role="contentinfo" id="site-footer">
+
+<small>Barcelona, 2020. This application was created by Borja Aguado using <a href="http://www.r-project.org">R</a> with <a href="http://rmarkdown.rstudio.com">RMarkdown</a> and hosted on <a href="http://shinyapps.io">Shinyapps</a>. </small>
+
+</p>
+
+</footer>
+
+</html>

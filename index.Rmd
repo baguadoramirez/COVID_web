@@ -1,5 +1,5 @@
 ---
-title: "COVID-19 (SARS-CoV-2): Datos Nacionales, por CCAA, mundiales y simulación epidemiológica"
+title: "COVID-19 (SARS-CoV-2): Datos Nacionales y por CCAA"
 #author: "Borja Aguado"
 output: html_document
 ---
