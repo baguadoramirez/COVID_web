@@ -3,7 +3,7 @@ title: "España"
 ---
 
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center')
 
@@ -109,7 +109,7 @@ ma <- function(arr, n=15){
 
 
 
-```{r }
+```{r}
 db_international <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
 
 
@@ -276,16 +276,22 @@ En el siguiente gráfico puedes ver los datos acumulados de pacientes infectados
 -   <s>La línea <span style="color:green"> verde indica los pacientes dados de alta</s>.
 
 ```{r}
-ggplot(Spain_long %>% filter(plot == "casos"),
+ggplot(Spain_long %>% 
+         filter(plot == "casos", id %in% c("casos","Deceased")) %>% 
+         mutate(id = case_when(id == "casos" ~ "Casos",
+                          id == "Deceased" ~ "Fallecidos")),
        aes(day, value, color = id)) +
   geom_point(size = 1) +
   geom_line(show.legend = F, size = 1) +
-  geom_label_repel(data = Spain_long_label %>%
-               filter(plot == "casos"),
+  geom_label_repel(data = Spain_long_label %>% 
+         filter(plot == "casos", id %in% c("casos","Deceased")) %>% 
+         mutate(id = case_when(id == "casos" ~ "Casos",
+                          id == "Deceased" ~ "Fallecidos")),
              aes(label = value),show.legend = F)+
   scale_x_date(date_labels = "%b %d", breaks = "1 month")+
   scale_color_manual(values = c("blue3","red","green"),
                      labels = c("Casos","Fallecidos","Recuperados")) +
+  facet_wrap(~id, scales = "free") +
   labs(x = NULL,
        y = "Acumulado",
        color = "Estado: ",
@@ -302,8 +308,12 @@ ggplot(Spain_long %>% filter(plot == "casos"),
 ```{r}
 ggplot(Spain_long %>% filter(plot == "new_casos"),
        aes(day, value, color = id)) +
-  geom_point(size = 1) +
-  geom_line(show.legend = F, size = 1) +
+  geom_point(data = . %>% filter(id == "new_casos"),
+             size = 1, alpha = 0.5) +
+  geom_line(data = . %>% filter(id == "new_casos"), 
+            show.legend = F, size = 1, alpha = 0.25) +
+  geom_line(data = . %>% filter(id == "new_casos_ma"), 
+            show.legend = F, size = 1) +
   geom_label_repel(data = Spain_long_label %>%
                filter(plot == "new_casos"),
              aes(label = value),
@@ -324,13 +334,50 @@ ggplot(Spain_long %>% filter(plot == "new_casos"),
 ---
 
 ```{r}
+
+aux = Spain_long %>% 
+         filter(id == "Deceased") %>% 
+         mutate(new_deceased = c(NA,diff(value)),
+                new_deceased_ma = ma(new_deceased, 7)) %>% 
+         filter(new_deceased >= 0, day > dmy("01/08/2020")) %>% 
+  gather(id, value, c("new_deceased","new_deceased_ma"))
+
+
+ggplot(aux,
+       aes(day, value, color = id)) +
+  geom_point(data = . %>% filter(id == "new_deceased"),
+             size = 1, alpha = 0.5) +
+  geom_line(data = . %>% filter(id == "new_deceased"), 
+            show.legend = F, size = 1, alpha = 0.25) +
+  geom_line(data = . %>% filter(id == "new_deceased_ma"), 
+            show.legend = F, size = 1) +
+  geom_label_repel(data = aux %>%
+                     filter(day == max(day)) ,
+             aes(label = round(value,0)),
+             show.legend = F) +
+  scale_x_date(date_labels = "%b %d", breaks = "1 month")+
+  scale_color_manual(values = c("red","blue3"),
+                     labels = c("Reales","Suavizados")) +
+    labs(x = NULL,
+         y = "Cambio en fallecidos \n  (Casos hoy - Casos ayer)",
+       title = "Nuevos fallecidos diarios",
+         color = NULL) + 
+  theme(axis.text.x = element_text(angle=90, vjust = 0.5),
+        legend.position = "bottom",
+        legend.justification = 0) + 
+  guides(color = guide_legend(override.aes = list(size = 3, alpha = 1)))
+```
+
+---
+
+```{r}
 ggplot(Spain_long %>% filter(plot == "indice"), aes(day,value, color = factor(id))) +
   geom_hline(yintercept = 1, color = "grey", linetype = 2) +
   geom_ribbon(data = Spain %>%
                 mutate(value = 0, id = NA) %>%
                 filter(day <= max(day)-7),
               aes(ymax = r0_95, ymin = r0_05),
-              alpha = 0.05, color = "pink") +
+              alpha = 0.25, color = "pink") +
   geom_line() +
   geom_label_repel(data = Spain_long_label %>%
                filter(plot == "indice"),
@@ -416,13 +463,13 @@ ggplot(Spain_UCI_long %>%
          filter(id %in% c("ingresos_covid_ultimas_24_h" ,
                           "altas_covid_ultimas_24_h")),
        aes(day,value, color = id)) +
-  geom_point(alpha = 0.1) +
-  geom_line(alpha = 0.051) +
+  geom_point(alpha = 0.5, size = 1) +
+  geom_line(alpha = 0.25, size = 1) +
   geom_line(data = Spain_UCI_long %>%
          filter(id %in% c("ingresos_covid_ultimas_24_h" ,
                           "altas_covid_ultimas_24_h")) %>%
               group_by(ccaa,id) %>% 
-              mutate(value = ma(value,7))) +
+              mutate(value = ma(value,7)), size = 1) +
   geom_label_repel(data = Spain_UCI_long_label %>%
                      filter(id %in% c("ingresos_covid_ultimas_24_h" ,
                           "altas_covid_ultimas_24_h")),
@@ -432,7 +479,7 @@ ggplot(Spain_UCI_long %>%
   scale_color_manual(values = pallete_dicho,
                      name = "Últimas 24 h",
                      labels = c("Altas", "Bajas")) +
-  labs(x = NULL, y = NULL, title = "Altas/Bajas (%)") +
+  labs(x = NULL, y = NULL, title = "Nuevas Altas/Bajas") +
   theme(legend.position = "bottom")
 ```
 
